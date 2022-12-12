@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     public float speed = 8f;
     public float jumpingPower = 16f;
     public bool isFacingRight = true;
+    public Animator animator;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -18,6 +19,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -25,7 +27,7 @@ public class Movement : MonoBehaviour
     {
         ///Moving
         horizontal = Input.GetAxisRaw("Horizontal");
-        Flip();
+        //Flip();
 
         ///Jumping
        
@@ -37,6 +39,15 @@ public class Movement : MonoBehaviour
         if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        }
+
+        if (horizontal != 0)
+        {
+            animator.SetBool("IsMovingE", true);
+        }
+        else
+        {
+            animator.SetBool("IsMovingE", false);
         }
             
             
@@ -58,7 +69,7 @@ public class Movement : MonoBehaviour
 
 
     /// Moving
-    private void Flip()
+    /*private void Flip()
     {
         if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal < 0f)
         {
@@ -67,5 +78,5 @@ public class Movement : MonoBehaviour
             localScale.x *= -1f;
             transform.localScale = localScale;
         }
-    }
+    }*/
 }
