@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour
     public float jumpingPower = 16f;
     public bool isFacingRight = true;
     public Animator animator;
+    SpriteRenderer spriteRenderer;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -20,6 +21,7 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -49,8 +51,8 @@ public class Movement : MonoBehaviour
         {
             animator.SetBool("IsMovingE", false);
         }
-            
-            
+
+        
 
     }
 
@@ -58,6 +60,7 @@ public class Movement : MonoBehaviour
     {
         ///Moving
         rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        FlipHandler();
     }
 
     //Jumping
@@ -66,6 +69,18 @@ public class Movement : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
 
+    void FlipHandler()
+    {
+        if (horizontal < 0)
+        {
+            spriteRenderer.flipX = true;
+        }
+
+        else if (horizontal > 0)
+        {
+            spriteRenderer.flipX = false;
+        }
+    }
 
 
     /// Moving
