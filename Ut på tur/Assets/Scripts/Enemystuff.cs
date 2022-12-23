@@ -5,16 +5,21 @@ using UnityEngine;
 public class Enemystuff : MonoBehaviour
 {
     public GameObject player;
+    Animator animator;
     public float speed;
     public float distanceBetween;
 
     private float distance;
-
+    public float horizontal;
+    float oldPosition = 0f;
+    SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
+        oldPosition = transform.position.x;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -39,6 +44,24 @@ public class Enemystuff : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
             transform.rotation = Quaternion.Euler(Vector3.forward * angle);
+
         }
+
+        /*if (transform.position.x > oldPosition)
+            {
+            animator.SetBool("isMoving", true);
+            spriteRenderer.flipX = true;
+        }
+
+        if (transform.position.x < oldPosition)
+        {
+            animator.SetBool("isMoving", false);
+            spriteRenderer.flipX = false;
+        }*/
     }
+
+    /*private void LateUpdate()
+    {
+        oldPosition = transform.position.x;
+    }*/
 }
